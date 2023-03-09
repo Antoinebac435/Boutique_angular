@@ -1,16 +1,23 @@
 import { Component } from '@angular/core';
+import { ProductService } from '../product.service';
 
-import { products } from '../products';
+import { Product } from '../products';
+
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  styleUrls: ['./product-list.component.css'],
 })
-
 export class ProductListComponent {
+  
+  products : Product[]=[];
 
-  products = [...products];
+  constructor(private productService: ProductService) {}
+
+  ngOnInit() {
+    this.productService.getProducts().subscribe(data => this.products = data);
+  }
 
   share() {
     window.alert('The product has been shared!');
@@ -20,7 +27,6 @@ export class ProductListComponent {
     window.alert('You will be notified when the product goes on sale');
   }
 }
-
 
 /*
 Copyright Google LLC. All Rights Reserved.
